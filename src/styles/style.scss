@@ -1,0 +1,25 @@
+//ROOT
+
+:root {
+    margin: 0 auto;
+    padding: 0 auto;
+    box-sizing: border-box;
+}
+
+// VARS
+
+$colorFondo: #160e23;
+$colorPrimario: #efffea;
+$colorSecundario: #424e75;
+
+
+@mixin bordes {
+    border: 2px solid $colorSecundario;
+    border-radius: 8px;
+}
+
+body {
+    background-color: $colorFondo;
+    color: $colorPrimario;
+}
+

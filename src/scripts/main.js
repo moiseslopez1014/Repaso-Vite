@@ -1,6 +1,41 @@
-import '../styles/style.scss'
+import '../styles/style.scss';
 
-const elemento = document.createElement('h2');
-elemento.textContent = 'Esto es un titulo';
+const anchorElement = document.querySelector('#app');
 
-document.querySelector('#app').appendChild(elemento);
+
+
+//Titulo
+const webTitle = document.createElement('h1');
+webTitle.textContent = 'Ejercicios de API - TMDb.org';
+
+anchorElement.appendChild(webTitle);
+
+//Seccion busqueda
+
+const sectionSearch = document.createElement('section');
+sectionSearch.className = 'sectionSearch';
+
+const inputSearch = document.createElement('input');
+inputSearch.setAttribute('type', 'text');
+inputSearch.setAttribute('placeholder', 'Encuentra una peli...')
+inputSearch.className = 'inputSearch';
+
+const searchButton = document.createElement('button');
+searchButton.setAttribute('type', 'submit');
+searchButton.textContent = 'Buscar peli';
+searchButton.className = 'searchButton';
+
+const sectionSearchSeparacion = document.createElement('hr')
+
+const showAllButton = document.createElement('button');
+showAllButton.textContent = 'Mostrar todas las peliculas';
+showAllButton.className = 'showAllButton';
+
+//busqueda appends
+sectionSearch.appendChild(inputSearch);
+sectionSearch.appendChild(searchButton);
+sectionSearch.appendChild(sectionSearchSeparacion);
+sectionSearch.appendChild(showAllButton);
+
+anchorElement.appendChild(sectionSearch);
+
