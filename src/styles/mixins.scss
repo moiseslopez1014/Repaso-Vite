@@ -1,0 +1,6 @@
+//MIXINS
+
+@mixin bordes {
+    border: 2px solid $colorSecundario;
+    border-radius: 8px;
+}

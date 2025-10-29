@@ -1,25 +1,78 @@
-//ROOT
-
-:root {
-    margin: 0 auto;
-    padding: 0 auto;
-    box-sizing: border-box;
-}
-
-// VARS
-
-$colorFondo: #160e23;
-$colorPrimario: #efffea;
-$colorSecundario: #424e75;
+@import 'root.scss';
+@import 'vars.scss';
+@import 'mixins.scss';
 
 
-@mixin bordes {
-    border: 2px solid $colorSecundario;
-    border-radius: 8px;
-}
+//MAIN
 
 body {
     background-color: $colorFondo;
     color: $colorPrimario;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px;
 }
 
+#app {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+//Seccion de busqueda
+
+.sectionSearch {
+    background-color: lighten($colorFondo, 20);
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    @include bordes();
+    .inputSearch {
+        @include bordes();
+        font-size: 18px;
+        background-color: lighten($colorFondo, 5);
+        color: $colorPrimario;
+    }
+    .searchButton {
+        @include bordes();
+        background-color: $colorPrimario;
+            &:hover {background-color: darken($colorPrimario, 5)}
+            &:active {background-color: $colorSecundario;}
+    }
+    .showAllButton {
+        font-weight: 600;
+        @extend .searchButton;
+        background-color: darken($colorPrimario, 10);
+        &:hover {background-color: darken($colorPrimario, 20);}
+        &:active {background-color: $colorSecundario;}
+    }
+}
+
+.sectionMovies {
+    display: grid;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(3, 1fr);
+    padding-top: 30px;
+    gap: 1vw;
+    width: 100%;
+    border: 3px solid lighten($colorSecundario, 10);
+    border-radius: 8px;
+}
+
+.movieDiv {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+
+    background-color: darken($colorSecundario, 25);
+    @include bordes();
+    padding: 15px;
+    gap: 5px;
+    &:hover {
+        box-shadow: 2px 2px 10px;
+    }
+    h2 {
+        font-size: 2em;
+    }
+}

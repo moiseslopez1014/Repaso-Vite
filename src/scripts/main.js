@@ -1,4 +1,5 @@
 import '../styles/style.scss';
+import { getMovies } from './utils.js';
 
 const anchorElement = document.querySelector('#app');
 
@@ -38,4 +39,17 @@ sectionSearch.appendChild(sectionSearchSeparacion);
 sectionSearch.appendChild(showAllButton);
 
 anchorElement.appendChild(sectionSearch);
+
+// Seccion cards
+
+const sectionMovies = document.createElement('section');
+sectionMovies.className = 'sectionMovies';
+
+anchorElement.appendChild(sectionMovies);
+
+// busqueda funciones 
+
+showAllButton.addEventListener('click', event => {
+    getMovies(sectionMovies);
+})
 
