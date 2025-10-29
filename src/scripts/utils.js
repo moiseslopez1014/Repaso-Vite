@@ -33,15 +33,27 @@ export function createMovieCard(movie) {
     const movieInfo = document.createElement('p');
     movieInfo.textContent = `Year - ${movie.release_date.slice(0,4)} | Rating - ${movie.vote_average.toFixed(2)}`
 
-
+    let movieInfoExtra;
+    
     movieDiv.appendChild(moviePoster);
     movieDiv.appendChild(movieTitle);
     movieDiv.appendChild(movieInfo);
-
+    
+    
     movieDiv.addEventListener('click', event => {
-        const movieInfoExtra = document.createElement('p');
-        movieInfoExtra.textContent = movie.overview;
-        movieDiv.appendChild(movieInfoExtra);
+        
+        if (!movieInfoExtra) {
+            
+            movieInfoExtra = document.createElement('p');
+            movieInfoExtra.textContent = movie.overview;
+            
+            movieDiv.appendChild(movieInfoExtra);
+
+        }
+        else {
+            movieDiv.removeChild(movieInfoExtra);
+            movieInfoExtra = null;
+        }
     })
 
     console.log(movie);
