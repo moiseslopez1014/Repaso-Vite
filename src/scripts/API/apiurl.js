@@ -1,7 +1,7 @@
 import { API_KEY } from "./apikey.js"
 
 
-let baseURL = 'https://api.themoviedb.org/3/movie/'
+export let baseURL = 'https://api.themoviedb.org/3/movie/'
 
-export const trendingMovies = `${baseURL}popular?api_key=${API_KEY}&language=en-US&page=1`;
+export const popularMovies = `${baseURL}popular?api_key=${API_KEY}&language=es-ES&page=1`;
 

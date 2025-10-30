@@ -1,7 +1,8 @@
 import '../styles/style.scss';
 import { getMovies } from './utils.js';
+import { popularMovies } from './API/apiurl.js';
 
-const anchorElement = document.querySelector('#app');
+export const anchorElement = document.querySelector('#app');
 
 
 
@@ -50,6 +51,15 @@ anchorElement.appendChild(sectionMovies);
 // busqueda funciones 
 
 showAllButton.addEventListener('click', event => {
-    getMovies(sectionMovies);
+    getMovies(sectionMovies, popularMovies);
 })
+
+
+//Section credits
+
+export const sectionCredits = document.createElement('section');
+sectionCredits.setAttribute('id', 'sectionCredits');
+sectionCredits.className = 'sectionCredits';
+
+anchorElement.appendChild(sectionCredits);
 
