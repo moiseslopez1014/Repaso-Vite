@@ -1,13 +1,27 @@
 //FETCH
 
 import { API_KEY } from "./API/apikey.js";
-import { baseURL } from "./API/apiurl.js";
+import { baseURL, categoriesES } from "./API/apiurl.js";
 import { sectionCredits } from "./main.js";
 
-export async function getMovies(container, url) {
+export function createCategorySelection(container) {
+  const categoriesToAppend = Object.entries(categoriesES);
+  
+  categoriesToAppend.map(category => {
+    const categoria = document.createElement('option');
+    categoria.setAttribute('value', category[1]);
+    categoria.textContent = category[0];
+
+    container.appendChild(categoria)
+  })
+}
+
+
+export async function getMovies(container, category) {
   container.innerHTML = ""; // Resetea el contenido del Div, evitando duplicados
+
   try {
-    const res = await fetch(url);
+    const res = await fetch(`${baseURL}${category}?api_key=${API_KEY}&language=es-ES&page=1`);
 
     if (!res.ok) throw new Error("Error de peticion " + res.status);
 
@@ -64,7 +78,7 @@ export function createMovieCard(movie) {
       movieInfoExtra = document.createElement("p");
       movieInfoExtra.textContent = movie.overview; // creamos un nuevo parrafo con sinopsis
 
-      buttonForMore = document.createElement("a"); //Boton que crea una nueva seccion
+      buttonForMore = document.createElement("a"); //Boton que crea una nueva seccion es un a para que funcione el href y se desplace abajo a la seccion de creditos
       buttonForMore.className = "buttonForMore";
       buttonForMore.textContent = "¡Saber más!";
       buttonForMore.setAttribute("href", "#sectionCredits");
@@ -87,7 +101,7 @@ export function createMovieCard(movie) {
   return movieDiv; //SACAMOS EL RESULTADO DE LA CARD COMPLETA
 }
 
-// FETCH para el detalle de peliculas
+// FETCH for credits movies
 
 export async function getMovieDetailed(movieID) {
   try {
@@ -101,6 +115,8 @@ export async function getMovieDetailed(movieID) {
     console.error(error.message);
   }
 }
+
+  //function to create movie credits
 
 export function showDetails(movie) {
   console.log(movie);

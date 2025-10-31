@@ -1,6 +1,5 @@
 import "../styles/style.scss";
-import { getMovies } from "./utils.js";
-import { popularMovies } from "./API/apiurl.js";
+import { getMovies, createCategorySelection } from "./utils.js";
 
 export const anchorElement = document.querySelector("#app");
 
@@ -31,11 +30,38 @@ const showAllButton = document.createElement("button");
 showAllButton.textContent = "Mostrar todas las peliculas";
 showAllButton.className = "showAllButton";
 
+
+const categorySelector = document.createElement('select');
+categorySelector.className = 'categorySelector';
+
+
+const categorySelectorDefault = document.createElement('option');
+categorySelectorDefault.textContent = 'Seleccione una categoria';
+categorySelectorDefault.setAttribute('value', 'null')
+categorySelectorDefault.setAttribute('default', 'default');
+
+categorySelector.appendChild(categorySelectorDefault);
+
+createCategorySelection(categorySelector);
+
+
 //busqueda appends
 sectionSearch.appendChild(inputSearch);
 sectionSearch.appendChild(searchButton);
 sectionSearch.appendChild(sectionSearchSeparacion);
 sectionSearch.appendChild(showAllButton);
+sectionSearch.appendChild(categorySelector);
+
+categorySelector.addEventListener('change', event => {
+  if (event.target.value === 'null') {
+    return;
+  }
+  else {
+    getMovies(sectionMovies, event.target.value);
+  }
+})
+
+
 
 anchorElement.appendChild(sectionSearch);
 
@@ -49,7 +75,7 @@ anchorElement.appendChild(sectionMovies);
 // busqueda funciones
 
 showAllButton.addEventListener("click", (event) => {
-  getMovies(sectionMovies, popularMovies);
+  getMovies(sectionMovies, 'popular');
 });
 
 //Section credits
