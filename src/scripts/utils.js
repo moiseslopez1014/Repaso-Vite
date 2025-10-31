@@ -1,27 +1,33 @@
 //FETCH
 
 import { API_KEY } from "./API/apikey.js";
-import { baseURL, categoriesES } from "./API/apiurl.js";
+import { baseURL, baseURLSearch, categoriesES } from "./API/apiurl.js";
 import { sectionCredits } from "./main.js";
 
 export function createCategorySelection(container) {
   const categoriesToAppend = Object.entries(categoriesES);
-  
-  categoriesToAppend.map(category => {
-    const categoria = document.createElement('option');
-    categoria.setAttribute('value', category[1]);
+
+  categoriesToAppend.map((category) => {
+    const categoria = document.createElement("option");
+    categoria.setAttribute("value", category[1]);
     categoria.textContent = category[0];
 
-    container.appendChild(categoria)
-  })
+    container.appendChild(categoria);
+  });
 }
 
-
-export async function getMovies(container, category) {
+export async function getMovies(container, category = "", searchInput) {
   container.innerHTML = ""; // Resetea el contenido del Div, evitando duplicados
-
+  let base;
+  if (searchInput === "") {
+    base = baseURL;
+  } else {
+    base = baseURLSearch;
+  }
   try {
-    const res = await fetch(`${baseURL}${category}?api_key=${API_KEY}&language=es-ES&page=1`);
+    const res = await fetch(
+      `${base}${category}?query=${searchInput}&api_key=${API_KEY}&language=es-ES&page=1`
+    );
 
     if (!res.ok) throw new Error("Error de peticion " + res.status);
 
@@ -47,10 +53,14 @@ export function createMovieCard(movie) {
   movieDiv.className = "movieDiv"; //crea un div con clase
 
   const moviePoster = document.createElement("img"); //crea imagen con la url de cada movie
-  moviePoster.setAttribute(
-    "src",
-    `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-  );
+  if (movie.poster_path === null) {
+    moviePoster.setAttribute("src", "../../imgs/logomovies.png");
+  } else {
+    moviePoster.setAttribute(
+      "src",
+      `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+    );
+  }
   moviePoster.setAttribute("movie-id", movie.id); //IMPORTANTE, ASIGNAMOS AQUI EL ID POR SI QUEREMOS RESCATAR ESTE VALOR PARA ESA PELICULA
 
   const movieTitle = document.createElement("h2");
@@ -116,7 +126,7 @@ export async function getMovieDetailed(movieID) {
   }
 }
 
-  //function to create movie credits
+//function to create movie credits
 
 export function showDetails(movie) {
   console.log(movie);
@@ -168,35 +178,33 @@ export function showDetails(movie) {
   //DIV FOR ACTOR
 
   movie.credits.cast.forEach((actor) => {
-    const actorDiv = document.createElement("div");
-    actorDiv.className = "actorDiv";
+    if (actor.profile_path !== null) {
+      const actorDiv = document.createElement("div");
+      actorDiv.className = "actorDiv";
 
-    creditsCastingDiv.appendChild(actorDiv);
+      creditsCastingDiv.appendChild(actorDiv);
 
-    const actorPortrait = document.createElement("img");
-    if (actor.profile_path === null) {
-      actorPortrait.setAttribute("src", "../../imgs/actorNotFound.png");
-    } else {
+      const actorPortrait = document.createElement("img");
       actorPortrait.setAttribute(
         "src",
         `https://image.tmdb.org/t/p/w300${actor.profile_path}`
       );
+
+      actorDiv.appendChild(actorPortrait);
+
+      const actorName = document.createElement("p");
+      actorName.textContent = actor.name;
+
+      actorDiv.appendChild(actorName);
+
+      const separasion = document.createElement("hr");
+
+      actorDiv.appendChild(separasion);
+
+      const actorChar = document.createElement("p");
+      actorChar.textContent = actor.character;
+
+      actorDiv.appendChild(actorChar);
     }
-
-    actorDiv.appendChild(actorPortrait);
-
-    const actorName = document.createElement("p");
-    actorName.textContent = actor.name;
-
-    actorDiv.appendChild(actorName);
-
-    const separasion = document.createElement("hr");
-
-    actorDiv.appendChild(separasion);
-
-    const actorChar = document.createElement("p");
-    actorChar.textContent = actor.character;
-
-    actorDiv.appendChild(actorChar);
   });
 }

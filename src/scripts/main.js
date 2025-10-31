@@ -19,6 +19,13 @@ inputSearch.setAttribute("type", "text");
 inputSearch.setAttribute("placeholder", "Encuentra una peli...");
 inputSearch.className = "inputSearch";
 
+inputSearch.addEventListener('input', event => {
+  if (event.target.value.length >= 3){
+    console.log(event.target.value);
+    getMovies(sectionMovies, '', event.target.value)
+  }
+})
+
 const searchButton = document.createElement("button");
 searchButton.setAttribute("type", "submit");
 searchButton.textContent = "Buscar peli";
@@ -57,7 +64,7 @@ categorySelector.addEventListener('change', event => {
     return;
   }
   else {
-    getMovies(sectionMovies, event.target.value);
+    getMovies(sectionMovies, event.target.value, '');
   }
 })
 
@@ -75,7 +82,7 @@ anchorElement.appendChild(sectionMovies);
 // busqueda funciones
 
 showAllButton.addEventListener("click", (event) => {
-  getMovies(sectionMovies, 'popular');
+  getMovies(sectionMovies, 'popular', '');
 });
 
 //Section credits
